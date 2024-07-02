@@ -4,7 +4,7 @@
 
         <div class="flex flex-row tablet:flex-col gap-6 w-full tablet:w-full">
             <div class="w-[50%] tablet:w-full flex flex-col gap-3">
-                IMPORT DISCORD
+                <livewire:discord-status wire:lazy>
             </div>
             <div class="w-[50%] tablet:w-full">
                 <div class="flex flex-col gap-4">

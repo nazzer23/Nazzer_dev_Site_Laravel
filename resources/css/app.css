@@ -16,7 +16,7 @@
 }
 
 .header .links a {
-    @apply p-3 font-secondary py-1;
+    @apply p-3 font-secondary py-1 lowercase;
 }
 
 .header .links a:hover {
