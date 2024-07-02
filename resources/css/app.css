@@ -1,0 +1,147 @@
+@import url('//fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap');
+@import url('//fonts.googleapis.com/css2?family=Space+Grotesk:wght@300..700&display=swap');
+@import "@flaticon/flaticon-uicons/css/solid/rounded.css";
+@import "@flaticon/flaticon-uicons/css/brands/all.css";
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.header {
+    @apply sticky top-3 flex items-center justify-center w-full my-3 tablet:my-0 z-10;
+}
+
+.header .links {
+    @apply isolate ring-1 ring-black/5 bg-slate-800/10 backdrop-blur-[3px] shadow-lg text-white flex flex-row gap-12 tablet:gap-3 w-[95%] justify-center py-2 px-6 rounded-2xl tablet:w-full tablet:rounded-none;
+}
+
+.header .links a {
+    @apply p-3 font-secondary py-1;
+}
+
+.header .links a:hover {
+    @apply rounded-xl bg-slate-700/20;
+}
+
+body {
+    @apply bg-primary-950 text-white scroll-smooth font-secondary;
+}
+
+main {
+    @apply flex flex-col gap-6 items-center tablet:w-full;
+}
+
+main section:not(:first-child) {
+    @apply border-t border-t-secondary-900/40 shadow-lg shadow-secondary-800/20 rounded-2xl;
+}
+
+main section {
+    @apply w-[80%] tablet:w-full p-4 flex flex-col justify-center items-center;
+}
+
+h1,
+.highlight {
+    @apply text-secondary-200;
+}
+
+h1.title {
+    @apply text-5xl;
+}
+
+h1 {
+    @apply text-2xl;
+}
+
+h1.title:before {
+    height: 125px;
+    font-size: 55px;
+    content: "</>";
+    font-weight: 700;
+    z-index: -1;
+    user-select: none;
+    transform: translate(-100%) translateY(0);
+    padding-right: 20px;
+    color: transparent;
+    opacity: .45;
+    letter-spacing: -.1em;
+    position: absolute;
+
+    @apply text-stroke text-stroke-secondary-500;
+}
+
+h2.tagline {
+    @apply font-secondary text-lg;
+}
+
+footer {
+    @apply flex flex-row justify-between tablet:flex-col gap-3 px-6 py-3 w-full;
+}
+
+.social-icons {
+    @apply flex flex-row gap-4 p-2;
+}
+
+
+.social-icons a {
+    @apply h-fit w-fit;
+}
+
+.social-icons a:hover i {
+    @apply text-secondary-500;
+}
+
+.social-icons i {
+    @apply text-secondary-600 text-xl mobile:text-3xl h-fit w-fit;
+}
+
+.tooltip {
+    @apply hidden absolute rounded shadow-lg p-1 px-2 bg-primary-900 text-white -mt-10;
+}
+
+.has-tooltip {
+    @apply w-fit;
+}
+
+.has-tooltip:hover .tooltip {
+    @apply block z-50;
+}
+
+.github_projects {
+    @apply grid grid-cols-3 tablet:grid-cols-2 mobile:grid-cols-1 gap-6 w-full p-2;
+}
+
+.github_projects .card {
+    @apply h-full flex flex-col justify-between gap-2 w-full bg-slate-800/10 rounded-xl backdrop-blur-[3px] p-3 border-2 border-secondary-800/60 shadow-secondary-400 shadow-sm;
+}
+
+.github_projects a .card:hover {
+    @apply transition ease-in-out duration-300 bg-gradient-to-b from-primary-900 to-primary-800 shadow-lg shadow-secondary-400;
+}
+
+.github_projects .card .card-header {
+    @apply flex flex-row justify-between gap-2;
+}
+
+.github_projects .card .card-header h2 {
+    @apply break-all text-lg;
+}
+
+.github_projects .card .card-header small.repo-language {
+    @apply w-fit text-secondary-300 font-bold;
+}
+
+.github_projects .card .card-body {
+    @apply h-full border-t border-y-secondary-800 py-2;
+}
+
+.github_projects .card .card-body p {
+    @apply text-sm;
+}
+
+.github_projects .card .card-footer {
+    @apply pt-2 flex flex-col justify-end gap-1 border-t border-y-secondary-800 items-end;
+}
+
+.github_projects .card .card-footer .small {
+    @apply w-fit;
+}
