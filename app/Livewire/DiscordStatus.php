@@ -12,7 +12,7 @@ class DiscordStatus extends Component
     public $discordStatus;
     public $discordColor;
     public $discordAvatar;
-    public $discordActivities = [];
+    public $activities;
 
     public function performDiscordRequest()
     {
@@ -41,11 +41,45 @@ class DiscordStatus extends Component
         };
 
         $this->discordAvatar = $responseData['discord_user']['avatar'];
-        $this->discordActivities = $responseData['activities'];
+        $discordActivities = $responseData['activities'];
+
+        foreach($discordActivities as $discordActivity) {
+            $this->activities[] = $this->parseDiscordActivity($discordActivity);
+        }
+
+    }
+
+    private function parseDiscordActivity($discordActivity) {
+        $name = trim($discordActivity['name'] ?? "");
+        $details = trim($discordActivity['details'] ?? "");
+        $state = trim($discordActivity['state'] ?? "");
+
+        if(strtolower($name) == "spotify") {
+            $name = '<span class="spotify_color"><i class="fi fi-brands-spotify"></i></span>';
+            $state = explode("; ", $state)[0];
+        }
+
+        $activity = $name;
+
+        $values = [];
+        if(!empty($state)) {
+            $values[] = $state;
+        }
+        if(!empty($details)) {
+            $values[] = $details;
+        }
+        if(!empty($values)) {
+            $activity = "{$activity} | " . join(" - ", $values);
+        }
+
+        return $activity;
     }
 
     public function render()
     {
+        // Reset activities
+        $this->activities = [];
+
         $this->performDiscordRequest();
         return view('livewire.discord-status');
     }

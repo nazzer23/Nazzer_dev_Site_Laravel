@@ -5,9 +5,9 @@
         <div class="space-y-1 font-medium w-full">
             <h1>{{$discordName}}</h1>
             <div class="text-sm text-primary-100 flex flex-col gap-1">
-                @foreach($discordActivities as $activityData)
+                @foreach($activities as $activityData)
                     <div class="border-t border-t-secondary-900 pt-2">
-                        <livewire:discord-activity wire:key="{{$activityData['id']}}" :activityJson="$activityData"/>
+                        {!! $activityData !!}
                     </div>
                 @endforeach
             </div>

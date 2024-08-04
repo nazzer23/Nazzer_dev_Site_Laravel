@@ -145,3 +145,7 @@ footer {
 .github_projects .card .card-footer .small {
     @apply w-fit;
 }
+
+.spotify_color {
+    @apply text-[#1DB954];
+}
