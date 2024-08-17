@@ -4,7 +4,7 @@ on:
     branches: [ main ]
 jobs:
   deployment:
-    runs-on: [self-hosted, development]
+    runs-on: [self-hosted, neptune]
     steps:
     - name: Resolve permission issues with ownership
       working-directory: /home/nazzer/htdocs/nazzer.dev
