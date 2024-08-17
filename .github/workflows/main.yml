@@ -21,7 +21,7 @@ jobs:
     - name: Perform updates
       working-directory: /home/nazzer/htdocs/nazzer.dev
       shell: bash
-      run: sudo su -l nazzer -c 'cd /home/nazzer/htdocs/nazzer.dev/ && composer install && composer dump-autoload -o'
+      run: sudo su -l nazzer -c 'cd /home/nazzer/htdocs/nazzer.dev/ && composer install && composer dump-autoload -o && npm run build'
     - name: Resolve permission issues with ownership
       working-directory: /home/nazzer/htdocs/nazzer.dev
       shell: bash
