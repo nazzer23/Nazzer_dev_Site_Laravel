@@ -1,0 +1,28 @@
+name: Push to Neptune
+on:
+  push:
+    branches: [ main ]
+jobs:
+  deployment:
+    runs-on: [self-hosted, development]
+    steps:
+    - name: Resolve permission issues with ownership
+      working-directory: /home/nazzer/htdocs/nazzer.dev
+      shell: bash
+      run: chown -R nazzer:nazzer .
+    - name: Pull latest repo commits
+      working-directory: /home/nazzer/htdocs/nazzer.dev
+      shell: bash
+      run: git add . && git stash && gh repo sync && git stash clear
+    - name: Resolve permission issues with ownership
+      working-directory: /home/nazzer/htdocs/nazzer.dev
+      shell: bash
+      run: chown -R nazzer:nazzer .
+    - name: Perform updates
+      working-directory: /home/nazzer/htdocs/nazzer.dev
+      shell: bash
+      run: sudo su -l nazzer -c 'cd /home/nazzer/htdocs/nazzer.dev/ && composer install && composer dump-autoload -o'
+    - name: Resolve permission issues with ownership
+      working-directory: /home/nazzer/htdocs/nazzer.dev
+      shell: bash
+      run: chown -R nazzer:nazzer .
