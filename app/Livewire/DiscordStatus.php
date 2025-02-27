@@ -17,9 +17,9 @@ class DiscordStatus extends Component
     public function performDiscordRequest()
     {
         $request = Http::get("https://api.lanyard.rest/v1/users/" . env('DISCORD_ID', '165584933149081600'));
-        $response = $request->json();
+        $response = $request?->json();
 
-        if (!$response['success']) {
+        if (empty($response) || !$response['success']) {
             return;
         }
         $responseData = $response['data'];
@@ -43,18 +43,19 @@ class DiscordStatus extends Component
         $this->discordAvatar = $responseData['discord_user']['avatar'];
         $discordActivities = $responseData['activities'];
 
-        foreach($discordActivities as $discordActivity) {
+        foreach ($discordActivities as $discordActivity) {
             $this->activities[] = $this->parseDiscordActivity($discordActivity);
         }
 
     }
 
-    private function parseDiscordActivity($discordActivity) {
+    private function parseDiscordActivity($discordActivity)
+    {
         $name = trim($discordActivity['name'] ?? "");
         $details = trim($discordActivity['details'] ?? "");
         $state = trim($discordActivity['state'] ?? "");
 
-        if(strtolower($name) == "spotify") {
+        if (strtolower($name) == "spotify") {
             $name = '<span class="spotify_color"><i class="fi fi-brands-spotify"></i></span>';
             $state = explode("; ", $state)[0];
         }
@@ -62,13 +63,13 @@ class DiscordStatus extends Component
         $activity = $name;
 
         $values = [];
-        if(!empty($state)) {
+        if (!empty($state)) {
             $values[] = $state;
         }
-        if(!empty($details)) {
+        if (!empty($details)) {
             $values[] = $details;
         }
-        if(!empty($values)) {
+        if (!empty($values)) {
             $activity = "{$activity} | " . join(" - ", $values);
         }
 
