@@ -19,7 +19,8 @@ class GithubProject extends Model
         "html_url",
         "description",
         "repo_pushed_at",
-        "repo_created_at"
+        "repo_created_at",
+        "flag_fork",
     ];
 
     protected $casts = [

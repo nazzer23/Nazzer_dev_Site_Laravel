@@ -23,7 +23,7 @@ jobs:
       - name: Resolve permission issues with ownership
         run: chown -R ${{ env.DEPLOYMENT_USER }}:${{ env.DEPLOYMENT_USER }} .
       - name: Perform updates
-        run: sudo su -l ${{ env.DEPLOYMENT_USER }} -c 'cd ${{env.DEPLOYMENT_PATH}} && composer install && composer dump-autoload -o && npm install && npm run build'
+        run: sudo su -l ${{ env.DEPLOYMENT_USER }} -c 'cd ${{env.DEPLOYMENT_PATH}} && composer install && composer dump-autoload -o && npm install && npm run build && php artisan migrate --force'
       - name: Resolve permission issues with ownership
         run: |
           chown -R ${{ env.DEPLOYMENT_USER }}:${{ env.DEPLOYMENT_USER }} .

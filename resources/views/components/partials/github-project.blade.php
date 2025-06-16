@@ -27,6 +27,9 @@
                 @if($project->repo_created_at)
                     <small>Created on {{$project->repo_created_at->format('d/m/Y')}}</small>
                 @endif
+                @if($project?->flag_fork)
+                    <small>Repo is forked</small>
+                @endif
             </div>
         </div>
         @if($project->html_url)

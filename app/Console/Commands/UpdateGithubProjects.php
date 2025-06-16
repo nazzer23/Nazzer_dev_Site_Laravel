@@ -50,6 +50,7 @@ class UpdateGithubProjects extends Command
             $githubProject->description = $project['description'];
             $githubProject->repo_pushed_at = $project['pushed_at'];
             $githubProject->repo_created_at = $project['created_at'];
+            $githubProject->flag_fork = $project['fork'] ?? false;
 
             $githubProject->save();
         }
