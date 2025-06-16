@@ -25,14 +25,15 @@ class UpdateGithubProjects extends Command
     /**
      * Execute the console command.
      */
-    public function handle()
+    public function handle(): void
     {
-        $request = Http::get('https://api.github.com/users/' . env('GITHUB_USER', 'nazzer23') . '/repos');
+        $request = Http::get('https://api.github.com/users/' . config('github.user', '') . '/repos');
         $response = $request->json();
 
-        $repoIDs = (collect($response)->map(function ($item) {
+        /** @var array<string, mixed> $response */
+        $repoIDs = collect($response)->map(function ($item) {
             return $item['id'];
-        }));
+        });
 
         GithubProject::query()->whereNotIn('github_id', $repoIDs)->delete();
 

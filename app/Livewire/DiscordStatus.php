@@ -7,25 +7,31 @@ use Livewire\Component;
 
 class DiscordStatus extends Component
 {
-    public $discordId;
-    public $discordName;
-    public $discordStatus;
-    public $discordColor;
-    public $discordAvatar;
-    public $activities;
+    public ?string $discordId;
+    public ?string $discordName;
+    public ?string $discordStatus;
+    public ?string $discordColor;
+    public ?string $discordAvatar;
+    /**
+     * @var array<string>
+     */
+    public array $activities;
 
-    public function performDiscordRequest()
+    public function performDiscordRequest(): void
     {
-        $request = Http::get("https://api.lanyard.rest/v1/users/" . env('DISCORD_ID', '165584933149081600'));
-        $response = $request?->json();
+        $this->activities = [];
+        $request = Http::get("https://api.lanyard.rest/v1/users/" . ((string)config('discord.discord_id')));
+
+        /** @var array<string, mixed> $response */
+        $response = (array)$request->json();
 
         if (empty($response) || !$response['success']) {
             return;
         }
-        $responseData = $response['data'];
-        $this->discordId = $responseData['discord_user']['id'];
-        $this->discordName = $responseData['discord_user']['username'];
-        $discordStatus = $responseData['discord_status'];
+        $responseData = (array)$response['data'];
+        $this->discordId = (string)$responseData['discord_user']['id'];
+        $this->discordName = (string)$responseData['discord_user']['username'];
+        $discordStatus = (string)$responseData['discord_status'];
         $this->discordColor = match ($discordStatus) {
             'online' => "green",
             'dnd' => "red",
@@ -43,19 +49,27 @@ class DiscordStatus extends Component
         $this->discordAvatar = $responseData['discord_user']['avatar'];
         $discordActivities = $responseData['activities'];
 
+        /** @var array<string, mixed> $discordActivity */
         foreach ($discordActivities as $discordActivity) {
             $this->activities[] = $this->parseDiscordActivity($discordActivity);
         }
 
         // Check for duplicate and empty activities
-        $this->activities = array_filter(array_unique($this->activities), fn ($activity) => !empty($activity));
+        $this->activities = array_filter(/**
+         * @param $activity
+         * @return bool
+         */ array_unique($this->activities), fn($activity) => !empty($activity));
 
     }
 
-    private function parseDiscordActivity($discordActivity): string
+    /**
+     * @param array<string, mixed> $discordActivity
+     * @return string
+     */
+    private function parseDiscordActivity(array $discordActivity): string
     {
         $name = trim($discordActivity['name'] ?? "");
-        $type = trim($discordActivity['type'] ?? 0);
+        $type = trim($discordActivity['type'] ?? "");
         $details = trim($discordActivity['details'] ?? "");
         $state = trim($discordActivity['state'] ?? "");
 
@@ -64,15 +78,15 @@ class DiscordStatus extends Component
             $state = explode("; ", $state)[0];
         }
 
-        if ((int) $type === 4) {
+        if ((int)$type === 4) {
 
             // Get avatar emoji data
             $avatarEmoji = $discordActivity['emoji'] ?? [];
-            if(empty($avatarEmoji)) {
+            if (empty($avatarEmoji)) {
                 return '';
             }
-            $avatarEmojiId = $avatarEmoji['id'] ?? null;
-            if(empty($avatarEmojiId)) {
+            $avatarEmojiId = $avatarEmoji['id'] ?? '';
+            if (empty($avatarEmojiId)) {
                 return '';
             }
 
@@ -96,7 +110,7 @@ class DiscordStatus extends Component
         return $activity;
     }
 
-    public function render()
+    public function render(): object
     {
         // Reset activities
         $this->activities = [];

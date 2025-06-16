@@ -19,7 +19,7 @@
     <link rel="manifest" href="/site.webmanifest">
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <meta name="description" content="The development portfolio for Ben Vernazza aka Nazzer23."/>
-    <title>{{env('APP_NAME', 'Laravel')}}</title>
+    <title>{{config('app.name', 'Laravel')}}</title>
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 
