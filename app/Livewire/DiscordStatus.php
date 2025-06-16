@@ -47,17 +47,37 @@ class DiscordStatus extends Component
             $this->activities[] = $this->parseDiscordActivity($discordActivity);
         }
 
+        // Check for duplicate and empty activities
+        $this->activities = array_filter(array_unique($this->activities), fn ($activity) => !empty($activity));
+
     }
 
-    private function parseDiscordActivity($discordActivity)
+    private function parseDiscordActivity($discordActivity): string
     {
         $name = trim($discordActivity['name'] ?? "");
+        $type = trim($discordActivity['type'] ?? 0);
         $details = trim($discordActivity['details'] ?? "");
         $state = trim($discordActivity['state'] ?? "");
 
-        if (strtolower($name) == "spotify") {
-            $name = '<span class="spotify_color"><i class="fi fi-brands-spotify"></i></span>';
+        if (strtolower($name) === "spotify") {
+            $name = '<span class="spotify_color discord_icon"><i class="fi fi-brands-spotify"></i></span>';
             $state = explode("; ", $state)[0];
+        }
+
+        if ((int) $type === 4) {
+
+            // Get avatar emoji data
+            $avatarEmoji = $discordActivity['emoji'] ?? [];
+            if(empty($avatarEmoji)) {
+                return '';
+            }
+            $avatarEmojiId = $avatarEmoji['id'] ?? null;
+            if(empty($avatarEmojiId)) {
+                return '';
+            }
+
+            $discordAvatarUrl = "https://cdn.discordapp.com/emojis/{$avatarEmojiId}.gif?size=24";
+            $name = '<img src="' . $discordAvatarUrl . '" class="discord_icon">';
         }
 
         $activity = $name;
@@ -70,7 +90,7 @@ class DiscordStatus extends Component
             $values[] = $details;
         }
         if (!empty($values)) {
-            $activity = "{$activity} | " . join(" - ", $values);
+            $activity = "<span>{$activity}&nbsp;|&nbsp;" . join(" - ", $values) . "</span>";
         }
 
         return $activity;

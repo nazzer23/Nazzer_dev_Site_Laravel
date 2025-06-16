@@ -3,13 +3,13 @@
         <h1>my projects</h1>
 
         <div>
-            <div class="github_projects">
-                @if(\App\Models\GithubProject::get()->count() <= 0)
-                    <h2>The user has no public repositories</h2>
-                @else
+            @if(\App\Models\GithubProject::get()->count() <= 0)
+                <h2>The user has no public repositories</h2>
+            @else
+                <div class="github_projects">
                     @each('components.partials.github-project', \App\Models\GithubProject::all()->sortByDesc('repo_pushed_at'), 'project')
-                @endif
-            </div>
+                </div>
+            @endif
         </div>
 
     </div>

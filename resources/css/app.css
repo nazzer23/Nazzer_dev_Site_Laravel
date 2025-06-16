@@ -149,3 +149,7 @@ footer {
 .spotify_color {
     @apply text-[#1DB954];
 }
+
+.discord_icon {
+    @apply float-left;
+}
