@@ -24,16 +24,18 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 
     <script type="application/ld+json">
-        {
-          "@context": "https://schema.org",
-          "@type": "ProfilePage",
-          "mainEntity": {
+    @verbatim
+    {
+        "@context": "https://schema.org",
+        "@type": "ProfilePage",
+        "mainEntity": {
             "@type": "Person",
             "name": "Ben Vernazza",
             "alternateName": "nazzer23",
             "identifier": "1"
-          }
         }
+    }
+    @endverbatim
     </script>
 
 
