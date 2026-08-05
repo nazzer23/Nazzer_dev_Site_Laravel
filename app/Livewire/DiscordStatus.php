@@ -2,6 +2,9 @@
 
 namespace App\Livewire;
 
+use Carbon\Carbon;
+use Illuminate\Http\Client\ConnectionException;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Http;
 use Livewire\Component;
 
@@ -17,18 +20,49 @@ class DiscordStatus extends Component
      */
     public array $activities;
 
-    public function performDiscordRequest(): void
+    public function render(): object
     {
+        // Reset activities
         $this->activities = [];
-        $request = Http::get("https://api.lanyard.rest/v1/users/" . ((string)config('discord.discord_id')));
 
-        /** @var array<string, mixed> $response */
-        $response = (array)$request->json();
+        $this->retrieveDiscordResponse();
 
-        if (empty($response) || !$response['success']) {
+        return view('livewire.discord-status');
+    }
+
+    /**
+     * @throws ConnectionException
+     */
+    private function retrieveDiscordResponse(): void
+    {
+        if (empty(config('discord.discord_id'))) {
             return;
         }
-        $responseData = (array)$response['data'];
+
+        $sCacheKey = 'DISCORD_PRESENCE_' . ((string)config('discord.discord_id'));
+
+        // Check to see if we have the discord response stored in cache.
+        $aDiscordResponse = Cache::get($sCacheKey);
+        /** @var Carbon|null $oLastUpdated */
+        $oLastUpdated = Cache::get($sCacheKey . '_LAST_UPDATED');
+        $bRetrievedFresh = false;
+        if (empty($aDiscordResponse) || (!empty($oLastUpdated) && $oLastUpdated->add('10 seconds')->lessThan(now()))) {
+            $aDiscordResponse = $this->performDiscordRequest();
+            if (!empty($aDiscordResponse)) {
+                $bRetrievedFresh = true;
+            }
+        }
+
+        if (!empty($aDiscordResponse) && $bRetrievedFresh) {
+            Cache::put($sCacheKey, $aDiscordResponse);
+            Cache::put($sCacheKey . '_LAST_UPDATED', now());
+        }
+
+        if (empty($aDiscordResponse)) {
+            return;
+        }
+
+        $responseData = (array)$aDiscordResponse['data'];
         $this->discordId = (string)$responseData['discord_user']['id'];
         $this->discordName = (string)$responseData['discord_user']['username'];
         $discordStatus = (string)$responseData['discord_status'];
@@ -59,7 +93,25 @@ class DiscordStatus extends Component
          * @param $activity
          * @return bool
          */ array_unique($this->activities), fn($activity) => !empty($activity));
+    }
 
+    /**
+     * @return array<string, mixed>|null
+     * @throws \Illuminate\Http\Client\ConnectionException
+     */
+    public function performDiscordRequest(): ?array
+    {
+        $this->activities = [];
+        $request = Http::get("https://api.lanyard.rest/v1/users/" . ((string)config('discord.discord_id')));
+
+        /** @var array<string, mixed> $response */
+        $response = (array)$request->json();
+
+        if (empty($response) || !$response['success']) {
+            return null;
+        }
+
+        return $response;
     }
 
     /**
@@ -108,14 +160,5 @@ class DiscordStatus extends Component
         }
 
         return $activity;
-    }
-
-    public function render(): object
-    {
-        // Reset activities
-        $this->activities = [];
-
-        $this->performDiscordRequest();
-        return view('livewire.discord-status');
     }
 }
