@@ -3,9 +3,43 @@
 @import "@flaticon/flaticon-uicons/css/solid/rounded.css";
 @import "@flaticon/flaticon-uicons/css/brands/all.css";
 
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+@custom-variant laptop (@media (max-width: 1280px));
+@custom-variant tablet (@media (max-width: 1024px));
+@custom-variant mobile (@media (max-width: 767px));
+
+@theme {
+    --font-sans: "Open Sans", ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+    --font-secondary: "SpaceGrotesk", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+
+    --color-primary: #5376C0;
+    --color-primary-50: #C9D4EB;
+    --color-primary-100: #BCC9E6;
+    --color-primary-200: #A2B4DD;
+    --color-primary-300: #889FD3;
+    --color-primary-400: #6D8BCA;
+    --color-primary-500: #5376C0;
+    --color-primary-600: #3B5BA0;
+    --color-primary-700: #2C4477;
+    --color-primary-800: #1D2C4E;
+    --color-primary-900: #0E1525;
+    --color-primary-950: #060A11;
+
+    --color-secondary: #562A89;
+    --color-secondary-50: #FBF7FC;
+    --color-secondary-100: #F6ECF9;
+    --color-secondary-200: #E2C4ED;
+    --color-secondary-300: #CB9DE1;
+    --color-secondary-400: #B276D5;
+    --color-secondary-500: #954FC9;
+    --color-secondary-600: #7536B0;
+    --color-secondary-700: #562A89;
+    --color-secondary-800: #34224F;
+    --color-secondary-900: #1E172B;
+    --color-secondary-950: #171320;
+}
 
 .header {
     @apply sticky top-3 flex items-center justify-center w-full my-3 tablet:my-0 z-10;
@@ -50,23 +84,6 @@ h1.title {
 
 h1 {
     @apply text-2xl;
-}
-
-h1.title:before {
-    height: 125px;
-    font-size: 55px;
-    content: "</>";
-    font-weight: 700;
-    z-index: -1;
-    user-select: none;
-    transform: translate(-100%) translateY(0);
-    padding-right: 20px;
-    color: transparent;
-    opacity: .45;
-    letter-spacing: -.1em;
-    position: absolute;
-
-    @apply text-stroke text-stroke-secondary-500;
 }
 
 h2.tagline {
