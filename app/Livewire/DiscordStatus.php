@@ -46,7 +46,7 @@ class DiscordStatus extends Component
         /** @var Carbon|null $oLastUpdated */
         $oLastUpdated = Cache::get($sCacheKey . '_LAST_UPDATED');
         $bRetrievedFresh = false;
-        if (empty($aDiscordResponse) || (!empty($oLastUpdated) && $oLastUpdated->add('10 seconds')->lessThan(now()))) {
+        if (empty($aDiscordResponse) || (!empty($oLastUpdated) && $oLastUpdated->add('1 minutes')->lessThan(now()))) {
             $aDiscordResponse = $this->performDiscordRequest();
             if (!empty($aDiscordResponse)) {
                 $bRetrievedFresh = true;
@@ -64,7 +64,7 @@ class DiscordStatus extends Component
 
         $responseData = (array)$aDiscordResponse['data'];
         $this->discordId = (string)$responseData['discord_user']['id'];
-        $this->discordName = (string)$responseData['discord_user']['username'];
+        $this->discordName = (string)$responseData['discord_user']['display_name'];
         $discordStatus = (string)$responseData['discord_status'];
         $this->discordColor = match ($discordStatus) {
             'online' => "green",
@@ -127,7 +127,8 @@ class DiscordStatus extends Component
 
         if (strtolower($name) === "spotify") {
             $name = '<span class="spotify_color discord_icon"><i class="fi fi-brands-spotify"></i></span>';
-            $state = explode("; ", $state)[0];
+            $aArtists = explode("; ", $state);
+            $state = implode(", ", $aArtists);
         }
 
         if ((int)$type === 4) {
