@@ -1,16 +1,40 @@
-<section id="projects">
-    <div class="flex flex-col gap-6 justify-center items-center w-full">
-        <h1>my projects</h1>
+@props(['projects', 'categories', 'activeCategory'])
 
-        <div>
-            @if(\App\Models\GithubProject::get()->count() <= 0)
-                <h2>The user has no public repositories</h2>
-            @else
-                <div class="github_projects">
-                    @each('components.partials.github-project', \App\Models\GithubProject::all()->sortByDesc('repo_pushed_at'), 'project')
-                </div>
-            @endif
+<section id="projects" class="section">
+    <div class="section-heading">
+        <h2 class="section-title">Selected repositories</h2>
+    </div>
+
+    @if($categories->isNotEmpty())
+        <div class="chips">
+            <button
+                type="button"
+                wire:click="setCategory(null)"
+                class="chip cursor-pointer @if(!$activeCategory) chip-active @endif"
+            >
+                All
+            </button>
+            @foreach($categories as $category)
+                <button
+                    type="button"
+                    wire:click="setCategory('{{ $category->slug }}')"
+                    class="chip cursor-pointer @if($activeCategory === $category->slug) chip-active @endif"
+                >
+                    {{ $category->name }}
+                </button>
+            @endforeach
+        </div>
+    @endif
+
+    @if($projects->isEmpty())
+        <p>{{ $activeCategory ? 'No repositories in this category yet.' : 'No public repositories yet.' }}</p>
+    @else
+        <div class="repo-grid">
+            @foreach($projects->take(3) as $project)
+                <x-partials.repo-card :project="$project"/>
+            @endforeach
         </div>
 
-    </div>
+        <x-partials.repo-table :projects="$projects"/>
+    @endif
 </section>

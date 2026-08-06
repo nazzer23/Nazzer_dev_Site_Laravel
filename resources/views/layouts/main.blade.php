@@ -19,23 +19,39 @@
     <link rel="manifest" href="/site.webmanifest">
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <meta name="description" content="The development portfolio for Ben Vernazza aka Nazzer23."/>
+    <meta name="robots" content="index, follow"/>
+
+    <meta property="og:title" content="Ben Vernazza — Nazzer23"/>
+    <meta property="og:description" content="The development portfolio for Ben Vernazza aka Nazzer23."/>
+    <meta property="og:type" content="website"/>
+    <meta property="og:url" content="{{ url()->current() }}"/>
+
+    <meta name="twitter:card" content="summary"/>
+    <meta name="twitter:title" content="Ben Vernazza — Nazzer23"/>
+    <meta name="twitter:description" content="The development portfolio for Ben Vernazza aka Nazzer23."/>
+
     <title>{{config('app.name', 'Laravel')}}</title>
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 
+    @php($skillNames = \App\Models\Skill::pluck('name'))
     <script type="application/ld+json">
-    @verbatim
-    {
-        "@context": "https://schema.org",
-        "@type": "ProfilePage",
-        "mainEntity": {
-            "@type": "Person",
-            "name": "Ben Vernazza",
-            "alternateName": "nazzer23",
-            "identifier": "1"
-        }
-    }
-    @endverbatim
+    {!! json_encode([
+        '@context' => 'https://schema.org',
+        '@type' => 'ProfilePage',
+        'mainEntity' => [
+            '@type' => 'Person',
+            'name' => 'Ben Vernazza',
+            'alternateName' => 'nazzer23',
+            'identifier' => '1',
+            'jobTitle' => 'Software Engineer',
+            'sameAs' => [
+                'https://github.com/nazzer23/',
+                'https://www.linkedin.com/in/nazzer23/',
+            ],
+            'knowsAbout' => $skillNames,
+        ],
+    ], JSON_UNESCAPED_SLASHES) !!}
     </script>
 
 

@@ -1,8 +1,5 @@
-<div class="border-t-2 border-primary-900 w-full">
-    <footer>
-        <x-partials.icons.social-icons/>
-        <div>
-            <p>Made by <span class="highlight">Ben Vernazza</span></p>
-        </div>
-    </footer>
-</div>
+<footer class="footer">
+    <span>&copy; {{ now()->year }} <span class="highlight">Ben Vernazza</span></span>
+    <x-partials.icons.social-icons/>
+    <span>Website by <a href="https://elbah.group/" target="_blank" rel="noreferrer" class="small-link">Elbah Group</a></span>
+</footer>
