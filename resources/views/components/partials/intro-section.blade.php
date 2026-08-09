@@ -1,15 +1,26 @@
-<section id="intro">
-    <div class="flex flex-row tablet:flex-col gap-6 justify-center items-center w-[80%] tablet:w-full">
-        <div class="w-[50%] tablet:w-full pl-20 flex flex-col gap-3">
-            <div class="flex flex-col">
-                <h1 class="title">Ben Vernazza</h1>
-                <h2 class="tagline">Transforming Code into Innovation</h2>
-            </div>
-            <x-partials.icons.social-icons/>
-            <a class="hover:bg-primary-800/20 border-l-4 border-secondary-400 bg-primary-900/30 hover:transition hover:shadow-lg hover:shadow-primary-900 rounded-md w-fit py-1 px-2" href="#projects" x-on:click.prevent="$scrollTo({offsetHeader: true})">view my projects</a>
+<section id="intro" class="hero">
+    <div class="hero-copy-col">
+        <livewire:discord-status wire:lazy/>
+
+        <h1 class="title">
+            Turning ideas into <span class="accent">reliable</span> software.
+        </h1>
+
+        <p class="hero-copy">
+            I build reliable software across application development, infrastructure and DevOps, with a focus on simple, maintainable systems.
+        </p>
+
+        <div class="hero-actions">
+            <x-partials.button href="#projects" variant="primary" x-on:click.prevent="$scrollTo({offsetHeader: true})">
+                Explore my work
+            </x-partials.button>
+            <x-partials.button href="{{route('contact')}}" variant="secondary">
+                Contact me
+            </x-partials.button>
         </div>
-        <div class="w-[50%] tablet:w-full ">
-            <x-partials.icons.programmer-animate />
-        </div>
+    </div>
+
+    <div class="hero-visual" aria-hidden="true">
+        <x-partials.code-window/>
     </div>
 </section>

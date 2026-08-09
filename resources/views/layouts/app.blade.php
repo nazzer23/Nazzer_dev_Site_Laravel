@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="csrf-token" content="{{ csrf_token() }}">
+
+        <title>{{ config('app.name', 'Laravel') }}</title>
+
+        <!-- Scripts -->
+        @vite(['resources/css/app.css', 'resources/js/app.js'])
+    </head>
+    <body class="font-secondary antialiased bg-primary-950 text-white">
+        <div class="min-h-screen flex tablet:flex-col">
+            <livewire:layout.navigation />
+
+            <div class="flex-1 min-w-0">
+                <!-- Page Heading -->
+                @if (isset($header))
+                    <header class="border-b border-primary-800/40">
+                        <div class="w-full py-6 px-6">
+                            {{ $header }}
+                        </div>
+                    </header>
+                @endif
+
+                <!-- Page Content -->
+                <main>
+                    {{ $slot }}
+                </main>
+            </div>
+        </div>
+    </body>
+</html>

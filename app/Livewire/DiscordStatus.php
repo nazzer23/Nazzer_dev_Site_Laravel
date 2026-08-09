@@ -10,15 +10,15 @@ use Livewire\Component;
 
 class DiscordStatus extends Component
 {
-    public ?string $discordId;
-    public ?string $discordName;
-    public ?string $discordStatus;
-    public ?string $discordColor;
-    public ?string $discordAvatar;
+    public ?string $discordId = null;
+    public ?string $discordName = null;
+    public ?string $discordStatus = null;
+    public ?string $discordColor = null;
+    public ?string $discordAvatar = null;
     /**
      * @var array<string>
      */
-    public array $activities;
+    public array $activities = [];
 
     public function render(): object
     {

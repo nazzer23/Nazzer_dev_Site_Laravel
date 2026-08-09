@@ -6,6 +6,7 @@
         "build": "vite build"
     },
     "devDependencies": {
+        "@tailwindcss/forms": "^0.5.2",
         "@tailwindcss/vite": "^4.3.3",
         "alpinejs-scroll-to": "^1.1.1",
         "axios": "^1.8.2",

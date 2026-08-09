@@ -1,9 +1,9 @@
 <div class="social-icons">
     <div class="has-tooltip">
-        <span class='tooltip'>Contact Me</span>
+        <span class='tooltip'>Contact me</span>
 
-        <a href="mailto:ben@nazzer.dev">
-            <span class="sr-only">Email Me</span>
+        <a href="{{route('contact')}}">
+            <span class="sr-only">Contact me</span>
             <i class="fi fi-sr-envelope"></i>
         </a>
     </div>
