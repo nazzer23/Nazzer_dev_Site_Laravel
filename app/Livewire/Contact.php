@@ -68,28 +68,41 @@ class Contact extends Component
                 senderEmail: $validated['email'],
                 body: $validated['message'],
             ));
+
+            // The log mailer never fails, but it never reaches an inbox either — notify Discord too.
+            if (config('mail.default') === 'log') {
+                $this->notifyDiscord($validated);
+            }
         } catch (\Exception $ex) {
             ACore::handleException($ex);
 
             // If Unable to send contact via email - we should trigger a Discord Webhook instead.
-            ACore::sendDiscordNotification(
-                sLocation: "Contact Form",
-                sMessage: $validated['message'],
-                aFields: [
-                    [
-                        'name' => 'Name',
-                        'value' => $validated['name']
-                    ],
-                    [
-                        'name' => 'Email',
-                        'value' => $validated['email']
-                    ],
-                ]
-            );
+            $this->notifyDiscord($validated);
         }
 
         $this->reset(['name', 'email', 'message', 'website', 'turnstileToken']);
         $this->sent = true;
+    }
+
+    /**
+     * @param array{name: string, email: string, message: string} $validated
+     */
+    private function notifyDiscord(array $validated): void
+    {
+        ACore::sendDiscordNotification(
+            sLocation: "Contact Form",
+            sMessage: $validated['message'],
+            aFields: [
+                [
+                    'name' => 'Name',
+                    'value' => $validated['name']
+                ],
+                [
+                    'name' => 'Email',
+                    'value' => $validated['email']
+                ],
+            ]
+        );
     }
 
     private function throttleKey(): string
