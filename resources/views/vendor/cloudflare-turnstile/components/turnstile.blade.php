@@ -27,12 +27,8 @@ $model = $attributes->has('wire:model') ? $attributes->get('wire:model') : null;
 @if ($model)
     <script @if($nonce) nonce="{{ $nonce }}" @endif>
         document.addEventListener('livewire:navigated', () => {
-            console.log('[turnstile] listener registered for {{ $model }}');
-
             window.{{ $id }}Callback = function (token) {
-                console.log('[turnstile] token received', token);
                 @this.set("{{ $model }}", token);
-                setTimeout(() => console.log('[turnstile] value 500ms after set:', @this["{{ $model }}"]), 500);
             }
 
             window.{{ $id }}ExpiredCallback = function () {
