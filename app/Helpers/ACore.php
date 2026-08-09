@@ -63,7 +63,11 @@ class ACore
     }
 
     /**
-     * @throws ConnectionException
+     * @param array<string, mixed>|null $payload
+     * @param string|null $sLocation
+     * @param string|null $sMessage
+     * @param array<array<string, mixed>> $aFields
+     * @param int $iColor
      */
     public static function sendDiscordNotification(?array $payload = null, ?string $sLocation = '', ?string $sMessage = '', array $aFields = [], int $iColor = 5305012): void
     {
