@@ -11,9 +11,10 @@ class SkillSeeder extends Seeder
      * Edit this list to change what shows in the "Skills" card — no view changes needed.
      */
     private const SKILLS = [
-        'Backend' => ['PHP', 'Laravel', 'Livewire'],
-        'Frontend' => ['Alpine.js', 'Tailwind CSS', 'Blade'],
-        'Tooling' => ['Vite', 'Git', 'PHPStan / Larastan'],
+        'Languages & Frameworks' => ['PHP', 'Java', 'Laravel', 'Livewire'],
+        'Frontend' => ['Blade', 'Alpine.js', 'JQuery', 'Tailwind CSS', 'Bootstrap'],
+        'Infrastructure & DevOps' => ['AWS', 'Docker', 'Linux', 'Windows', 'Jenkins', 'GitHub Actions'],
+        'Databases & Tooling' => ['PostgreSQL', 'MySQL', 'Vite', 'Git', 'PHPStan / Larastan'],
     ];
 
     public function run(): void

@@ -9,7 +9,7 @@
     <div class="repo-card-top">
         <div class="repo-title-wrap">
             <div class="repo-title-line">
-                <span class="repo-title">{{ $project->name }}</span>
+                <span class="repo-title">{{ $project->displayName() }}</span>
                 @if($project->flag_fork)
                     <span class="repo-badge">Fork</span>
                 @endif

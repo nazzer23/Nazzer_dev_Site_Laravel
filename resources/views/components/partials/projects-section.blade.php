@@ -2,7 +2,7 @@
 
 <section id="projects" class="section">
     <div class="section-heading">
-        <h2 class="section-title">Selected repositories</h2>
+        <h2 class="section-title">Recently Updated</h2>
     </div>
 
     @if($categories->isNotEmpty())

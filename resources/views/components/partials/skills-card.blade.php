@@ -2,17 +2,17 @@
 
 @if($skillGroups->isNotEmpty())
     <article class="lower-card glass">
-        <h2 class="lower-title">Skills</h2>
+        <h2 class="lower-title">Technical Skills</h2>
 
         <div class="skills-grid">
             @foreach($skillGroups as $category => $skills)
                 <div>
                     <h3 class="skill-heading">{{ $category }}</h3>
-                    <ul class="skill-list">
+                    <div class="chips">
                         @foreach($skills as $skill)
-                            <li>{{ $skill->name }}</li>
+                            <x-partials.chip>{{ $skill->name }}</x-partials.chip>
                         @endforeach
-                    </ul>
+                    </div>
                 </div>
             @endforeach
         </div>

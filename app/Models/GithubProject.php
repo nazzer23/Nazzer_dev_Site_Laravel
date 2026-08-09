@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Str;
 
 class GithubProject extends Model
 {
@@ -52,5 +53,29 @@ class GithubProject extends Model
     public function projects(): BelongsToMany
     {
         return $this->belongsToMany(Project::class);
+    }
+
+    public function displayName(): string
+    {
+        return Str::of($this->name)
+            ->lower()
+            ->headline()
+            ->replace([
+                'Nazzer Dev',
+                'Aws',
+                'Api',
+                'Php',
+                'Js',
+                'Nodejs',
+                'Node Js',
+            ], [
+                'nazzer.dev',
+                'AWS',
+                'API',
+                'PHP',
+                'JS',
+                'Node.js',
+                'Node.js',
+            ]);
     }
 }

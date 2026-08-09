@@ -7,25 +7,16 @@
         </h1>
 
         <p class="hero-copy">
-            I'm Ben, a developer who's been writing code since 2009. I care about
-            turning complex problems into simple, well-built systems &mdash; and I'm
-            always exploring new technology to do that better.
+            I build reliable software across application development, infrastructure and DevOps, with a focus on simple, maintainable systems.
         </p>
 
         <div class="hero-actions">
             <x-partials.button href="#projects" variant="primary" x-on:click.prevent="$scrollTo({offsetHeader: true})">
                 Explore my work
             </x-partials.button>
-            <x-partials.button href="mailto:ben@nazzer.dev" variant="secondary">
-                Email me
+            <x-partials.button href="{{route('contact')}}" variant="secondary">
+                Contact me
             </x-partials.button>
-        </div>
-
-        <div class="chips">
-            <x-partials.chip>PHP / Laravel</x-partials.chip>
-            <x-partials.chip>Livewire</x-partials.chip>
-            <x-partials.chip>Alpine.js</x-partials.chip>
-            <x-partials.chip>Tailwind CSS</x-partials.chip>
         </div>
     </div>
 

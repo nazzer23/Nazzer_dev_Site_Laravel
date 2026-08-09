@@ -10,8 +10,12 @@ use Livewire\Component;
 #[Layout('layouts.app')]
 class Index extends Component
 {
-    public function delete(Project $project): void
+    public function delete(int $projectId): void
     {
+        if ($projectId) {
+            $project = Project::find($projectId);
+        }
+
         $project->delete();
     }
 

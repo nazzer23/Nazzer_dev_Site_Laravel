@@ -17,15 +17,13 @@
                 <col style="width:24%">
                 <col style="width:37%">
                 <col style="width:14%">
-                <col style="width:9%">
-                <col style="width:16%">
+                <col style="width:10%">
             </colgroup>
             <thead>
                 <tr>
                     <th>Repository</th>
                     <th>Description</th>
                     <th>Language</th>
-                    <th>Stars</th>
                     <th>Updated</th>
                 </tr>
             </thead>
@@ -39,7 +37,7 @@
                                 @else
                                     <x-partials.icons.git.repo/>
                                 @endif
-                                {{ $project->name }}
+                                {{ $project->displayName() }}
                             </a>
                         </td>
                         <td class="description-cell">{{ $project->description ?: '—' }}</td>
@@ -49,12 +47,11 @@
                                 <span class="repo-tag-demo">{{ $category->name }}</span>
                             @endforeach
                         </td>
-                        <td>{{ $project->stargazers_count }}</td>
                         <td>{{ $project->repo_pushed_at?->diffForHumans(null, true) }}</td>
                     </tr>
                 @empty
                     <tr>
-                        <td colspan="5">No repositories are available.</td>
+                        <td colspan="4">No repositories are available.</td>
                     </tr>
                 @endforelse
             </tbody>

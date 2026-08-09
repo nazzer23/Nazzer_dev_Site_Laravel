@@ -10,7 +10,6 @@
                 <a href="{{ route('home') }}#projects" wire:navigate>Work</a>
                 <a href="{{ route('home') }}#about" wire:navigate>About</a>
             @endif
-            <a href="https://github.com/{{ config('github.user') }}" target="_blank" rel="noreferrer">GitHub &#8599;</a>
         </nav>
 
         <div class="mobile:hidden">
