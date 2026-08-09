@@ -12,9 +12,7 @@ class Index extends Component
 {
     public function delete(int $projectId): void
     {
-        if ($projectId) {
-            $project = Project::find($projectId);
-        }
+        $project = Project::findOrFail($projectId);
 
         $project->delete();
     }
