@@ -57,6 +57,9 @@ class GithubProject extends Model
 
     public function displayName(): string
     {
+        if (empty($this->name)) {
+            return $this->name;
+        }
         return Str::of($this->name)
             ->lower()
             ->headline()
