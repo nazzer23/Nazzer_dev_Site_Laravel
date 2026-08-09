@@ -14,6 +14,13 @@
             <x-input-error :messages="$errors->get('email')" class="mt-2" />
         </div>
 
+        @if (\App\Support\Turnstile::enabled())
+            <div class="mt-4">
+                <x-turnstile wire:model="turnstileToken"/>
+                <x-input-error :messages="$errors->get('turnstileToken')" class="mt-2"/>
+            </div>
+        @endif
+
         <div class="flex items-center justify-end mt-4">
             <x-primary-button>
                 {{ __('Email Password Reset Link') }}

@@ -32,6 +32,10 @@
 
     <title>{{config('app.name', 'Laravel')}}</title>
 
+    @if (\App\Support\Turnstile::enabled())
+        <x-turnstile.scripts/>
+    @endif
+
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 
     @php($skillNames = \App\Models\Skill::pluck('name'))

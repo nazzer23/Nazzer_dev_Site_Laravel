@@ -30,6 +30,13 @@
             </label>
         </div>
 
+        @if (\App\Support\Turnstile::enabled())
+            <div class="mt-4">
+                <x-turnstile wire:model="turnstileToken"/>
+                <x-input-error :messages="$errors->get('turnstileToken')" class="mt-2"/>
+            </div>
+        @endif
+
         <div class="flex items-center justify-end mt-4">
             @if (Route::has('password.request'))
                 <a class="underline text-sm text-primary-200 hover:text-white rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500" href="{{ route('password.request') }}" wire:navigate>

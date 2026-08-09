@@ -4,9 +4,11 @@ namespace App\Livewire;
 
 use App\Helpers\ACore;
 use App\Mail\ContactMessage;
+use App\Support\Turnstile;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\RateLimiter;
+use Illuminate\Validation\ValidationException;
 use Livewire\Attributes\Layout;
 use Livewire\Component;
 
@@ -25,17 +27,25 @@ class Contact extends Component
 
     public string $website = '';
 
+    public ?string $turnstileToken = null;
+
     public bool $sent = false;
 
     public function send(): void
     {
         $this->sent = false;
 
-        $validated = $this->validate([
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'email', 'max:255'],
-            'message' => ['required', 'string', 'min:10', 'max:5000'],
-        ]);
+        try {
+            $validated = $this->validate([
+                'name' => ['required', 'string', 'max:255'],
+                'email' => ['required', 'email', 'max:255'],
+                'message' => ['required', 'string', 'min:10', 'max:5000'],
+                'turnstileToken' => Turnstile::rules(),
+            ]);
+        } catch (ValidationException $e) {
+            $this->turnstileToken = null;
+            throw $e;
+        }
 
         if (filled($this->website)) {
             $this->reset(['name', 'email', 'message', 'website']);
@@ -78,7 +88,7 @@ class Contact extends Component
             );
         }
 
-        $this->reset(['name', 'email', 'message', 'website']);
+        $this->reset(['name', 'email', 'message', 'website', 'turnstileToken']);
         $this->sent = true;
     }
 

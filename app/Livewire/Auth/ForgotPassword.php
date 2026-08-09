@@ -2,8 +2,10 @@
 
 namespace App\Livewire\Auth;
 
+use App\Support\Turnstile;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Password;
+use Illuminate\Validation\ValidationException;
 use Livewire\Attributes\Layout;
 use Livewire\Component;
 
@@ -12,11 +14,19 @@ class ForgotPassword extends Component
 {
     public string $email = '';
 
+    public ?string $turnstileToken = null;
+
     public function sendPasswordResetLink(): void
     {
-        $this->validate([
-            'email' => ['required', 'string', 'email'],
-        ]);
+        try {
+            $this->validate([
+                'email' => ['required', 'string', 'email'],
+                'turnstileToken' => Turnstile::rules(),
+            ]);
+        } catch (ValidationException $e) {
+            $this->turnstileToken = null;
+            throw $e;
+        }
 
         $status = Password::sendResetLink(
             $this->only('email')

@@ -35,6 +35,13 @@
                     <input wire:model="website" id="website" type="text" tabindex="-1" autocomplete="off">
                 </div>
 
+                @if (\App\Support\Turnstile::enabled())
+                    <div>
+                        <x-turnstile wire:model="turnstileToken"/>
+                        <x-input-error :messages="$errors->get('turnstileToken')" class="mt-2"/>
+                    </div>
+                @endif
+
                 <div class="flex justify-end">
                     <button type="submit" class="btn btn-primary">Send message</button>
                 </div>
