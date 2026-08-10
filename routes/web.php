@@ -11,6 +11,9 @@ use App\Livewire\Admin\Repos\Index as AdminReposIndex;
 use App\Livewire\Admin\Skills\Index as AdminSkillsIndex;
 use App\Livewire\Contact;
 use App\Livewire\Homepage;
+use App\Livewire\Legal\Cookies as LegalCookies;
+use App\Livewire\Legal\Privacy as LegalPrivacy;
+use App\Livewire\Legal\Terms as LegalTerms;
 use App\Livewire\ProjectShow;
 use Illuminate\Support\Facades\Route;
 
@@ -19,6 +22,10 @@ Route::livewire('/', Homepage::class)->name('home');
 Route::livewire('/projects/{project}', ProjectShow::class)->name('projects.show');
 
 Route::livewire('/contact', Contact::class)->name('contact');
+
+Route::livewire('/terms', LegalTerms::class)->name('legal.terms');
+Route::livewire('/privacy', LegalPrivacy::class)->name('legal.privacy');
+Route::livewire('/cookies', LegalCookies::class)->name('legal.cookies');
 
 Route::get('/sitemap.xml', SitemapController::class)->name('sitemap');
 

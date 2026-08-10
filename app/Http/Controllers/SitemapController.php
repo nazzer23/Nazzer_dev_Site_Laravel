@@ -12,6 +12,9 @@ class SitemapController extends Controller
         $urls = [
             ['loc' => route('home'), 'lastmod' => now()],
             ['loc' => route('contact'), 'lastmod' => now()],
+            ['loc' => route('legal.terms'), 'lastmod' => now()],
+            ['loc' => route('legal.privacy'), 'lastmod' => now()],
+            ['loc' => route('legal.cookies'), 'lastmod' => now()],
         ];
 
         foreach (Project::all() as $project) {
